@@ -32,5 +32,6 @@ or replace them with other versions, and relink the firmware.
 
 
 `data/cert/x509_crt_bundle.bin` holds public root CA certificates taken from a
-standard system trust store (Mozilla CA list) so that HTTPS can be verified.
+standard system trust store (Mozilla CA list), plus GlobalSign Root CA (R1,
+`data/cert/globalsign-root-ca-r1.pem`), so that HTTPS can be verified.
 It contains no private keys.
