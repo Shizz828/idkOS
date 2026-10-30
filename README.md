@@ -1,4 +1,12 @@
-# idkOS
+# idkOS  <img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/b9dcab34-67b1-4a67-9465-70235e424ba8" />  
+<img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/b807646a-d916-4f03-b022-3150b59f8c31" />  <img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/9e57e42c-5b20-4565-843c-9ce3f1cb164c" /> <img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/55a8b1f6-54f9-45bc-a219-5c9c48ac4d2a" /> <img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/8495899d-437a-407b-805f-a31d8d52050c" /> <img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/573ab84c-b492-42f0-a3db-5373fec548ca" /> <img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/1ac04b4b-f4f3-4379-8b07-7c2ab5ac7c53" /> <img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/40318483-9430-40d5-9d80-20c096dfda89" />
+
+
+
+
+
+
+
 
 **idkOS** is a lightweight, keyboard-first pocket computing environment built for the **M5Stack Cardputer ADV**.
 
