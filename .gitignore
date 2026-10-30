@@ -1,0 +1,16 @@
+# Build output and caches
+.pio/
+build/
+__pycache__/
+*.pyc
+# Local secrets (scripts/configure_coingecko.py writes here)
+secrets/
+.env
+*.env
+# Editors and OS files
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db

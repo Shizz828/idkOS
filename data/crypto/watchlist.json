@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "provider": "coingecko",
+  "plan": "demo",
+  "currency": "usd",
+  "status": "provider_ids_verified_demo_request_succeeded",
+  "coins": [
+    {
+      "name": "XRP",
+      "symbol": "XRP",
+      "coingecko_id": "ripple"
+    },
+    {
+      "name": "Solana",
+      "symbol": "SOL",
+      "coingecko_id": "solana"
+    },
+    {
+      "name": "USDC",
+      "symbol": "USDC",
+      "coingecko_id": "usd-coin"
+    },
+    {
+      "name": "Zcash",
+      "symbol": "ZEC",
+      "coingecko_id": "zcash"
+    },
+    {
+      "name": "VeChain",
+      "symbol": "VET",
+      "coingecko_id": "vechain"
+    },
+    {
+      "name": "Canton",
+      "symbol": "CC",
+      "coingecko_id": "canton-network"
+    },
+    {
+      "name": "Abelian",
+      "symbol": "ABEL",
+      "coingecko_id": "abelian"
+    },
+    {
+      "name": "Algorand",
+      "symbol": "ALGO",
+      "coingecko_id": "algorand"
+    },
+    {
+      "name": "Stellar",
+      "symbol": "XLM",
+      "coingecko_id": "stellar"
+    },
+    {
+      "name": "Hyperliquid",
+      "symbol": "HYPE",
+      "coingecko_id": "hyperliquid"
+    }
+  ]
+}

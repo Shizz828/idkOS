@@ -1,0 +1,324 @@
+{
+  "schema_version": 1,
+  "provider": "coingecko",
+  "plan": "demo",
+  "currency": "usd",
+  "status": "requested_list_pending_id_resolution_and_initial_selection",
+  "coins": [
+    {
+      "name": "ZKsync",
+      "symbol": "ZK",
+      "coingecko_id": null
+    },
+    {
+      "name": "Zcash",
+      "symbol": "ZEC",
+      "coingecko_id": null
+    },
+    {
+      "name": "XRP",
+      "symbol": "XRP",
+      "coingecko_id": null
+    },
+    {
+      "name": "XDC Network",
+      "symbol": "XDC",
+      "coingecko_id": null
+    },
+    {
+      "name": "Wrapped Canton Coin",
+      "symbol": "WCC",
+      "coingecko_id": null
+    },
+    {
+      "name": "Wormhole",
+      "symbol": "W",
+      "coingecko_id": null
+    },
+    {
+      "name": "What IF",
+      "symbol": "IF",
+      "coingecko_id": null
+    },
+    {
+      "name": "VeThor",
+      "symbol": "VTHO",
+      "coingecko_id": null
+    },
+    {
+      "name": "VeChain",
+      "symbol": "VET",
+      "coingecko_id": null
+    },
+    {
+      "name": "USDC",
+      "symbol": "USDC",
+      "coingecko_id": null
+    },
+    {
+      "name": "tx",
+      "symbol": "TX",
+      "coingecko_id": null
+    },
+    {
+      "name": "Tutorial",
+      "symbol": "TUT",
+      "coingecko_id": null
+    },
+    {
+      "name": "TRON",
+      "symbol": "TRX",
+      "coingecko_id": null
+    },
+    {
+      "name": "Tezos",
+      "symbol": "XTZ",
+      "coingecko_id": null
+    },
+    {
+      "name": "Sui",
+      "symbol": "SUI",
+      "coingecko_id": null
+    },
+    {
+      "name": "Step Finance",
+      "symbol": "STEP",
+      "coingecko_id": null
+    },
+    {
+      "name": "Stellar",
+      "symbol": "XLM",
+      "coingecko_id": null
+    },
+    {
+      "name": "Sologenic",
+      "symbol": "SOLO",
+      "coingecko_id": null
+    },
+    {
+      "name": "Solana",
+      "symbol": "SOL",
+      "coingecko_id": null
+    },
+    {
+      "name": "Ripple USD",
+      "symbol": "RLUSD",
+      "coingecko_id": null
+    },
+    {
+      "name": "RaveDAO",
+      "symbol": "RAVE",
+      "coingecko_id": null
+    },
+    {
+      "name": "Quantum Resistant Ledger",
+      "symbol": "QRL",
+      "coingecko_id": null
+    },
+    {
+      "name": "Pyth Network",
+      "symbol": "PYTH",
+      "coingecko_id": null
+    },
+    {
+      "name": "Pump.fun",
+      "symbol": "PUMP",
+      "coingecko_id": null
+    },
+    {
+      "name": "Pudgy Penguins",
+      "symbol": "PENGU",
+      "coingecko_id": null
+    },
+    {
+      "name": "Provenance Blockchain",
+      "symbol": "HASH",
+      "coingecko_id": null
+    },
+    {
+      "name": "Pons",
+      "symbol": "PONS",
+      "coingecko_id": null
+    },
+    {
+      "name": "Ontology",
+      "symbol": "ONT",
+      "coingecko_id": null
+    },
+    {
+      "name": "Oasis",
+      "symbol": "ROSE",
+      "coingecko_id": null
+    },
+    {
+      "name": "Nym",
+      "symbol": "NYM",
+      "coingecko_id": null
+    },
+    {
+      "name": "NEO",
+      "symbol": "NEO",
+      "coingecko_id": null
+    },
+    {
+      "name": "Morpho",
+      "symbol": "MORPHO",
+      "coingecko_id": null
+    },
+    {
+      "name": "Moonbeam",
+      "symbol": "GLMR",
+      "coingecko_id": null
+    },
+    {
+      "name": "Momentum",
+      "symbol": "MMT",
+      "coingecko_id": null
+    },
+    {
+      "name": "Linea",
+      "symbol": "LINEA",
+      "coingecko_id": null
+    },
+    {
+      "name": "Kusama",
+      "symbol": "KSM",
+      "coingecko_id": null
+    },
+    {
+      "name": "Intuition",
+      "symbol": "TRUST",
+      "coingecko_id": null
+    },
+    {
+      "name": "Injective",
+      "symbol": "INJ",
+      "coingecko_id": null
+    },
+    {
+      "name": "Hyperliquid",
+      "symbol": "HYPE",
+      "coingecko_id": null
+    },
+    {
+      "name": "Helium",
+      "symbol": "HNT",
+      "coingecko_id": null
+    },
+    {
+      "name": "Hedera",
+      "symbol": "HBAR",
+      "coingecko_id": null
+    },
+    {
+      "name": "Griffain New Hedge Fund",
+      "symbol": "CITADAIL",
+      "coingecko_id": null
+    },
+    {
+      "name": "GRIFFAIN",
+      "symbol": "GRIFFAIN",
+      "coingecko_id": null
+    },
+    {
+      "name": "GoMining Token",
+      "symbol": "GOMINING",
+      "coingecko_id": null
+    },
+    {
+      "name": "Flare",
+      "symbol": "FLR",
+      "coingecko_id": null
+    },
+    {
+      "name": "Ethereum",
+      "symbol": "ETH",
+      "coingecko_id": null
+    },
+    {
+      "name": "DOVU",
+      "symbol": "DOVU",
+      "coingecko_id": null
+    },
+    {
+      "name": "Dash",
+      "symbol": "DASH",
+      "coingecko_id": null
+    },
+    {
+      "name": "Coreum [OLD]",
+      "symbol": "COREUM",
+      "coingecko_id": null
+    },
+    {
+      "name": "Conflux",
+      "symbol": "CFX",
+      "coingecko_id": null
+    },
+    {
+      "name": "Cardano",
+      "symbol": "ADA",
+      "coingecko_id": null
+    },
+    {
+      "name": "Canton",
+      "symbol": "CC",
+      "coingecko_id": null
+    },
+    {
+      "name": "BNB",
+      "symbol": "BNB",
+      "coingecko_id": null
+    },
+    {
+      "name": "Bitcoin",
+      "symbol": "BTC",
+      "coingecko_id": null
+    },
+    {
+      "name": "Beldex",
+      "symbol": "BDX",
+      "coingecko_id": null
+    },
+    {
+      "name": "Avalanche",
+      "symbol": "AVAX",
+      "coingecko_id": null
+    },
+    {
+      "name": "Arrow",
+      "symbol": "ARROW",
+      "coingecko_id": null
+    },
+    {
+      "name": "Aptos",
+      "symbol": "APT",
+      "coingecko_id": null
+    },
+    {
+      "name": "Ankr Network",
+      "symbol": "ANKR",
+      "coingecko_id": null
+    },
+    {
+      "name": "Algorand",
+      "symbol": "ALGO",
+      "coingecko_id": null
+    },
+    {
+      "name": "Aethir",
+      "symbol": "ATH",
+      "coingecko_id": null
+    },
+    {
+      "name": "Abelian",
+      "symbol": "ABEL",
+      "coingecko_id": null
+    },
+    {
+      "name": "Aave",
+      "symbol": "AAVE",
+      "coingecko_id": null
+    }
+  ]
+}
