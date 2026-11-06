@@ -9,6 +9,7 @@
 #include "core/ScreenSleep.h"
 #include "core/IdleBacklight.h"
 #include "core/LightSleep.h"
+#include "core/LevelKeyboard.h"
 #include "core/IdleBoard.h"
 #include "core/MotionSensor.h"
 #include "ui/DisplayRecovery.h"
@@ -189,6 +190,7 @@ void setup() {
     uint32_t bootStarted=millis();
     auto cfg=M5.config();
     M5Cardputer.begin(cfg,true);
+    if(M5.getBoard()==m5::board_t::board_M5CardputerADV)useLevelKeyboard();
     M5Cardputer.Display.setRotation(1);
     M5Cardputer.Display.setTextWrap(false);
     Preferences displayPrefs;

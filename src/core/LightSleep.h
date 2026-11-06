@@ -15,7 +15,7 @@ inline bool standbyInputPending() {
 }
 inline StandbyWake enterLightSleep(uint64_t intervalUs=StandbyIntervalUs) {
     StandbyWake result;
-    // EXT1 avoids changing the keyboard's digital CHANGE interrupt type.
+    // EXT1 leaves the keyboard pin's digital setup alone.
     // Both ADV wake pins are RTC-capable on ESP32-S3.
     result.error=esp_sleep_enable_timer_wakeup(intervalUs);
     if(result.error==ESP_OK)result.error=esp_sleep_enable_ext1_wakeup(
