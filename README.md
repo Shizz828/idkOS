@@ -261,3 +261,37 @@ Third-party components and data sources keep their own licenses; see [THIRD_PART
 **idkOS V1**
 
 Built for the **M5Stack Cardputer ADV**.
+
+
+## The Story Behind idkOS
+
+
+The idea behind idkOS started with two things: an Idea Saver I came across on Instagram and my first experience using PicoWare on the M5Stack Cardputer ADV.
+
+When I saw the Idea Saver, I liked the concept of having a small, portable device for capturing notes and ideas. That eventually became the inspiration for Cache.
+
+Later, after getting my Cardputer ADV and experimenting with PicoWare, I realized I could create my own OS and set it up the way I wanted. Instead of relying entirely on what someone else had built, I could decide which features to include, how everything looked, and how it all worked together.
+
+My goal was simple: make the Cardputer something I could actually use in everyday life.
+
+I wasn't trying to replace my computer or phone, and I didn't know much about the security side of the ADV yet. I wanted a lightweight, practical environment that took advantage of what the Cardputer already offered: a keyboard, portability, Wi-Fi, and local storage.
+
+More importantly, I wanted useful features that I could take with me and access offline whenever possible.
+
+What started as an experiment gradually turned into something bigger. I began adding features like notes, reminders, weather, cryptocurrency information, and terminal access. Along the way, I learned more about the hardware, worked through bugs, and discovered just how much I could actually do with this little device.
+
+Eventually, I realized I wasn't just experimenting anymore. I was building something I wanted to keep using and improving.
+
+**Now, about that name...**
+
+Naming this project turned out to be harder than building parts of it.
+
+Every time I came up with a name I liked, I discovered that another project was already using it.
+
+After going through name after name, I finally got frustrated and said:
+
+**"I don't know what to call this shit. idkOS!!"**
+
+And just like that, the name stuck.
+
+
