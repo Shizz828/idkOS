@@ -1,5 +1,57 @@
 # idkOS  <img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/b9dcab34-67b1-4a67-9465-70235e424ba8" />  
-<img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/b807646a-d916-4f03-b022-3150b59f8c31" />  <img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/9e57e42c-5b20-4565-843c-9ce3f1cb164c" /> <img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/55a8b1f6-54f9-45bc-a219-5c9c48ac4d2a" /> <img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/8495899d-437a-407b-805f-a31d8d52050c" /> <img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/573ab84c-b492-42f0-a3db-5373fec548ca" /> <img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/1ac04b4b-f4f3-4379-8b07-7c2ab5ac7c53" /> <img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/40318483-9430-40d5-9d80-20c096dfda89" />
+<img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/b807646a-d916-4f03-b022-3150b59f8c31" />  <img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/9e57e42c-5b20-4565-843c-9ce3f1cb164c" /> <img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/55a8b1f6-54f9-45bc-a219-5c9c48ac4d2a" /> <img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/8495899d-437a-407b-805f-a31d8d52050c" /> <img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/573ab84c-b492-42f0-a3db-5373fec548ca" /> <img width="1152" height="1536" alt="image"
+
+## Latest Update — idkOS v1.3.0 🚇
+
+### Home Themes & Calendar Update
+
+**Three looks. One OS. More functionality.**
+
+idkOS V1 continues to evolve!
+
+Version 1.3.0 introduces three selectable home screen themes, an offline Calendar integrated with Cache reminders, and improvements to the user interface.
+
+### What's New
+
+**Three Home Screen Themes**
+
+- **Subway** — A colorful, subway-inspired interface with station-style navigation.
+- **Metro Minimal** — A clean, modern layout with clock and weather information.
+- **Classic V1** — The familiar original idkOS home screen.
+
+Change themes through:
+
+**Settings → Display → H (Home theme)**
+
+Theme preferences are saved and restored after sleep and reboot.
+
+### Calendar & Cache Integration
+
+- Offline monthly calendar.
+- Cache reminders displayed on their scheduled dates.
+- Highlighted current and selected dates.
+- View reminders for a selected day.
+- No internet connection required.
+
+**Calendar Shortcuts**
+
+- `Fn + 6` — Open Calendar
+- `[` and `]` — Change months
+- `T` — Jump to today
+- `Enter` — Open the selected day's reminders
+
+Calendar is read-only. Reminders are created and edited through Cache.
+
+### V1 Development Continues
+
+Although idkOS V2 is currently in development, V1 remains actively supported.
+
+Future updates will continue to focus on stability, practical improvements, and making idkOS more useful for everyday use.
+
+**Useful when you need it. Quiet when you don't.**
+
+[View all idkOS releases](https://github.com/Shizz828/idkOS/releases)
+ src="https://github.com/user-attachments/assets/1ac04b4b-f4f3-4379-8b07-7c2ab5ac7c53" /> <img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/40318483-9430-40d5-9d80-20c096dfda89" />
 
 
 
