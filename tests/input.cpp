@@ -20,7 +20,7 @@ int main(){
  k.s.shift=false; k.keys.clear(); i.poll(414);
  k.keys={{2,2}}; e=i.poll(415); assert(!e.shift && e.text[0]=='a');
  k.s.fn=true;
- for(int key=1;key<=5;++key) {
+ for(int key=1;key<=6;++key) {
   k.keys={{key,0}}; e=i.poll(500+key); assert(e.shortcut=='0'+key && !e.text[0]);
   assert(!i.poll(600+key).shortcut);
  }
@@ -30,7 +30,8 @@ int main(){
  assert(spark::shortcutApp('1')==spark::CaptureIndex && spark::shortcutApp('2')==spark::WeatherIndex);
  assert(spark::shortcutApp('3')==spark::CryptoIndex && spark::shortcutApp('4')==spark::ConsoleIndex);
  assert(spark::shortcutApp('5')==spark::SettingsIndex && spark::shortcutApp('s')==spark::SshIndex);
- assert(spark::shortcutApp('6')==-1);
+ assert(spark::shortcutApp('6')==spark::CalendarIndex);   // Fn+6 Calendar (1.2.0).
+ assert(spark::shortcutApp('7')==-1);
  k.s.fn=false; k.s.ctrl=true; k.keys={{3,2}};
  assert(i.poll(704).save); assert(!i.poll(705).save);
  k.s.ctrl=false; assert(!i.poll(706).save);
@@ -122,7 +123,7 @@ int main(){
   }
   // Fn shortcuts, Fn+L and Fn+Esc are the same in menus.
   k.s={};k.s.fn=true;
-  for(int key=1;key<=5;++key){k.keys={{key,0}};assert(menu.poll(t+=10,false,true).shortcut=='0'+key);k.keys.clear();menu.poll(t+=10,false,true);}
+  for(int key=1;key<=6;++key){k.keys={{key,0}};assert(menu.poll(t+=10,false,true).shortcut=='0'+key);k.keys.clear();menu.poll(t+=10,false,true);}
   k.keys={{3,2}};assert(menu.poll(t+=10,false,true).shortcut=='s');k.keys.clear();menu.poll(t+=10,false,true);
   k.keys={{10,2}};assert(menu.poll(t+=10,false,true).idle);k.keys.clear();menu.poll(t+=10,false,true);
   k.keys={{0,0}};e=menu.poll(t+=10,false,true);assert(e.sleep && !e.back);k.keys.clear();menu.poll(t+=10,false,true);

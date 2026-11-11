@@ -82,6 +82,31 @@ This makes idkOS useful as a small remote terminal for:
 
 ---
 
+### Calendar
+
+Calendar shows an offline month view with Cache reminders marked on their days.
+
+- Month grid with today and the selected day highlighted
+- Reminders for the selected day shown beside the grid
+- **Enter** opens a full list of that day's reminders
+- **[** and **]** change month, **T** jumps to today
+
+Calendar is read-only: reminders are created and edited in Cache.
+
+---
+
+### Home themes
+
+The Home screen comes in three styles:
+
+- **Subway** (default) — cyan subway route with station stops
+- **Metro Minimal** — clean, modern look with picture icons
+- **Classic V1** — the original idkOS Home
+
+Change it in **Settings → Display → H (Home theme)**. The choice is saved and kept after sleep and restarts.
+
+---
+
 ## Navigation
 
 idkOS is designed primarily around the Cardputer keyboard.
@@ -95,7 +120,8 @@ idkOS is designed primarily around the Cardputer keyboard.
 
 ### Shortcuts
 
-- **Fn + 1 through Fn + 5** — direct application shortcuts
+- **Fn + 1 through Fn + 5** — Cache, Weather, Crypto, Terminal, Settings
+- **Fn + 6** — Calendar
 - **Fn + S** — SSH
 - **Fn + Esc** — pocket-safe sleep
 

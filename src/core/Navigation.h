@@ -1,11 +1,18 @@
 #pragma once
 #include <stdint.h>
 namespace spark {
-constexpr unsigned AppCount = 6;
+constexpr unsigned AppCount = 7;
 constexpr unsigned RowsPerPage = 2;
 constexpr unsigned PageCount = (AppCount + RowsPerPage - 1) / RowsPerPage;
-// Home launcher icons: Cache, Weather, Crypto, Terminal, Settings (SSH is Fn+S).
-constexpr unsigned HomeAppCount = 5;
+// Home launcher icons, left to right: Cache, Weather, Crypto, Terminal, Calendar,
+// Settings (Settings stays last). Entries are app indexes (see AppRegistry); SSH is
+// Fn+S and has no icon. Calendar is Fn+6 so Fn+1..5 keep their V1 meaning.
+constexpr unsigned HomeAppCount = 6;
+constexpr unsigned HomeOrder[HomeAppCount] = {0, 1, 2, 3, 6, 4};
+inline int homePosition(unsigned app) {
+    for (unsigned i = 0; i < HomeAppCount; ++i) if (HomeOrder[i] == app) return int(i);
+    return -1;
+}
 struct Navigation {
     unsigned selected = 0;
     int active = -1;
@@ -17,8 +24,9 @@ struct Navigation {
     }
     // Left/Right on Home. After Fn+S (SSH, not an icon) it starts from either end.
     void moveHome(int delta) {
-        int current = selected < HomeAppCount ? int(selected) : (delta > 0 ? -1 : int(HomeAppCount));
-        selected = unsigned((current + delta + int(HomeAppCount)) % int(HomeAppCount));
+        int current = homePosition(selected);
+        if (current < 0) current = delta > 0 ? -1 : int(HomeAppCount);
+        selected = HomeOrder[(current + delta + int(HomeAppCount)) % int(HomeAppCount)];
     }
     void open() { active = selected; }
     void home() { active = -1; }

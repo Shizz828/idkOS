@@ -15,7 +15,7 @@ class Input {
     bool previous[56]{};
     bool enterHeld=false;
     bool saveHeld=false,reminderHeld=false,sleepHeld=false,idleHeld=false;
-    bool shortcutHeld[6]{};
+    bool shortcutHeld[7]{};
     bool escPending=false,escUsed=false;
     uint32_t escStarted=0;
     RepeatKey arrows[4], erase;
@@ -94,9 +94,9 @@ public:
         bool reminderDown=s.ctrl && !s.fn && current[1*14+4];
         out.reminder=reminderDown && !reminderHeld; reminderHeld=reminderDown;
         // Chord edges support either key order and never auto-repeat launches.
-        const unsigned positions[]={1,2,3,4,5,2*14+3};
-        const char shortcuts[]={'1','2','3','4','5','s'};
-        for(unsigned i=0;i<6;++i) {
+        const unsigned positions[]={1,2,3,4,5,6,2*14+3};
+        const char shortcuts[]={'1','2','3','4','5','6','s'};
+        for(unsigned i=0;i<7;++i) {
             bool down=s.fn && !s.ctrl && !s.alt && current[positions[i]];
             if(down && !shortcutHeld[i] && !out.shortcut) out.shortcut=shortcuts[i];
             shortcutHeld[i]=down;

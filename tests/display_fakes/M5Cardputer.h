@@ -4,14 +4,24 @@
 #include <cstring>
 #include <cstdint>
 constexpr uint16_t TFT_BLACK=0,TFT_WHITE=65535,TFT_CYAN=2047,TFT_GREEN=2016,TFT_RED=63488;
+struct FakeFont{bool small;};
+namespace fonts{static const FakeFont Font0{false},TomThumb{true};}
 struct FakeDisplay {
  int x=0,y=0,size=1;
  void point(int a,int b) { if(a<0 || a>=240 || b<0 || b>=135) fprintf(stderr,"Out of bounds: %d,%d cursor:%d,%d size:%d\n",a,b,x,y,size); assert(a>=0 && a<240 && b>=0 && b<135); }
  void fillScreen(uint16_t) {}
  void setTextSize(int n) { size=n; }
+ bool smallFontOn=false;
+ void setFont(const FakeFont* f){smallFontOn=f->small;}
+ void drawRect(int a,int b,int w,int h,uint16_t c){fillRect(a,b,w,h,c);}
+ void fillRoundRect(int a,int b,int w,int h,int,uint16_t c){fillRect(a,b,w,h,c);}
+ void drawRoundRect(int a,int b,int w,int h,int,uint16_t c){fillRect(a,b,w,h,c);}
+ int textWidth(const char* s){return int(strlen(s))*(smallFontOn?4:6*size);}
+ int fontHeight(){return smallFontOn?6:8*size;}
+
  void setTextColor(uint16_t,uint16_t) {}
  void setCursor(int a,int b) { x=a; y=b; point(a,b); }
- void print(const char* s) { if(*s) { point(x+int(strlen(s))*6*size-1,y+8*size-1); } }
+ void print(const char* s) { if(*s) { point(x+textWidth(s)-1,y+fontHeight()-1); } }
  void fillRect(int a,int b,int w,int h,uint16_t) { point(a,b); point(a+w-1,b+h-1); }
  void fillCircle(int a,int b,int r,uint16_t) { point(a-r,b-r); point(a+r,b+r); }
  void drawLine(int a,int b,int c,int d,uint16_t) { point(a,b); point(c,d); }

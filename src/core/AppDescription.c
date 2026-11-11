@@ -17,7 +17,7 @@ const __attribute__((section(".rodata_desc"))) esp_app_desc_t esp_app_desc = {
 #ifdef CONFIG_BOOTLOADER_APP_SECURE_VERSION
     .secure_version = CONFIG_BOOTLOADER_APP_SECURE_VERSION,
 #endif
-    .version = "1.1.2",
+    .version = "1.3.0",
     .project_name = "idkOS ADV",
     .time = __TIME__,
     .date = __DATE__,

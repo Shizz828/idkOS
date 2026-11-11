@@ -30,7 +30,7 @@ def main():
         req = urllib.request.Request(url, headers={
             AUTH_HEADER: key,
             "Accept": "application/json",
-            "User-Agent": "idkOS-setup/1.1.2",
+            "User-Agent": "idkOS-setup/1.3.0",
         })
         with urllib.request.urlopen(req, timeout=20) as response:
             body = response.read(1024 * 1024 + 1)

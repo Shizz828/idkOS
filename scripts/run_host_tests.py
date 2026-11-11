@@ -29,11 +29,13 @@ FAKES = {
     "wifi_form": "wifi_fakes",
     "weather_layout": "display_fakes",
     "crypto_layout": "display_fakes",
+    "calendar_layout": "display_fakes",
     "idle_board_layout": "display_fakes",
     "status_layout": "wifi_fakes",
     "service_persistence": "services_fakes",
     "location_settings": "wifi_fakes",
     "settings_terminal_ui": "wifi_fakes",
+    "home_themes": "wifi_fakes",
 }
 
 def main():

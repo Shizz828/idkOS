@@ -6,6 +6,8 @@
 #include <cstdint>
 #include <cstring>
 constexpr uint16_t TFT_BLACK=0,TFT_WHITE=65535;
+struct FakeFont{bool small;};
+namespace fonts{static const FakeFont Font0{false},TomThumb{true};}
 struct FakeDisplay {
  std::array<uint16_t,240*135> pixels{};
  int width=240,height=135,left=0,top=0,clipWidth=240,clipHeight=135;
@@ -45,6 +47,14 @@ struct FakeDisplay {
    }
  }
  void setTextSize(int s){textSize=s;}
+ bool smallFontOn=false;
+ void setFont(const FakeFont* f){smallFontOn=f->small;}
+ void drawRect(int a,int b,int w,int h,uint16_t c){fillRect(a,b,w,h,c);}
+ void fillRoundRect(int a,int b,int w,int h,int,uint16_t c){fillRect(a,b,w,h,c);}
+ void drawRoundRect(int a,int b,int w,int h,int,uint16_t c){fillRect(a,b,w,h,c);}
+ int textWidth(const char* s){return int(strlen(s))*(smallFontOn?4:6*textSize);}
+ int fontHeight(){return smallFontOn?6:8*textSize;}
+
  void setTextColor(uint16_t fg,uint16_t bg){foreground=fg;background=bg;}
  void setCursor(int x,int y){cursorX=x;cursorY=y;}
  void print(const char* text){

@@ -5,27 +5,32 @@
 #include "../services/WeatherData.h"
 #include "../terminal/TerminalData.h"
 #include "../ui/Screen.h"
+#include "../core/HomeTheme.h"
 namespace spark {
 struct SystemSnapshot {
     uint32_t uptime=0,heap=0,minimumHeap=0; int battery=-1,rssi=0;bool online=false,timeReady=false;
     char ssid[33]{},ip[20]{};StorageStats storage;
 };
-enum class SettingsAction { None,AddWifi,Location,Keyboard,Restart,SaveBrightness,Developer,SaveClockFormat };
+enum class SettingsAction { None,AddWifi,Location,Keyboard,Restart,SaveBrightness,Developer,SaveClockFormat,SaveHomeTheme };
 class SettingsApp {
     unsigned selected=0,networkSelected=0,maintenancePage=0;
     bool forgetConfirm=false,restartConfirm=false;
     char forgetName[33]{};
     const char* message="";
 public:
-    enum Page { Main,Wifi,Display,Maintenance,Shortcuts,About } page=Main;
+    // HomeTheme is reached from Display (H) and returns there.
+    enum Page { Main,Wifi,Display,Maintenance,Shortcuts,About,HomeThemePage } page=Main;
     int brightness=100;
+    unsigned themeSelected=0;
     void openWifi(){page=Wifi;forgetConfirm=restartConfirm=false;message="";}
     bool back() {
         if(forgetConfirm || restartConfirm){forgetConfirm=restartConfirm=false;return true;}
+        if(page==HomeThemePage){page=Display;message="";return true;}
         if(page!=Main){page=Main;message="";return true;}return false;
     }
     void savedBrightness(bool ok){message=ok?"Brightness saved":"Settings save failed";}
     void savedClockFormat(bool ok){message=ok?"Clock format saved":"Settings save failed";}
+    void savedHomeTheme(bool ok){message=ok?"Home theme saved":"Theme applied; save failed";}
     void cancelRestart(){restartConfirm=false;}
     void storageBusy(){message="SD busy; retry restart";}
     template<typename Service> SettingsAction input(const InputEvent& e,const WeatherSnapshot& weather,Service& service) {
@@ -53,7 +58,13 @@ public:
             if(e.left||e.down)brightness=brightness>30?brightness-10:20;
             if(e.right||e.up)brightness=brightness<245?brightness+10:255;
             if(c=='t')return SettingsAction::SaveClockFormat;
+            if(c=='h'){page=HomeThemePage;themeSelected=unsigned(homeTheme());message="";return SettingsAction::None;}
             if(e.enter)return SettingsAction::SaveBrightness;
+        } else if(page==HomeThemePage) {
+            if(e.up)themeSelected=(themeSelected+HomeThemeCount-1)%HomeThemeCount;
+            if(e.down)themeSelected=(themeSelected+1)%HomeThemeCount;
+            if(c>='1'&&c<='3')themeSelected=unsigned(c-'1');
+            if(e.enter)return SettingsAction::SaveHomeTheme;
         } else if(page==Maintenance) {
             if(e.left||e.right)maintenancePage=1-maintenancePage;
             if(c=='r')restartConfirm=true;
@@ -87,16 +98,31 @@ public:
             text(6,112,weather.networkSaveFailed?"Network storage error":message[0]?message:wifiMessage(weather.wifi.phase),1,weather.networkSaveFailed?theme::Error:theme::Attention);
             text(6,126,"Enter join  A scan  D forget",1,theme::Primary);return;
         }
-        if(page==Display){frame("DISPLAY");snprintf(row,sizeof(row),"Brightness: %d / 255",brightness);text(6,40,row,1,theme::Primary);text(6,63,"Arrows adjust; Enter saves");text(6,88,message,1,!strcmp(message,"Settings save failed")?theme::Error:theme::Success);text(6,106,twelveHourClock()?"T Clock: 12-hour (toggle/save)":"T Clock: 24-hour (toggle/save)",1,theme::Primary);text(6,126,"Esc back");return;}
+        if(page==Display){frame("DISPLAY");snprintf(row,sizeof(row),"Brightness: %d / 255",brightness);text(6,36,row,1,theme::Primary);text(6,50,"Arrows adjust; Enter saves");
+            snprintf(row,sizeof(row),"H Home theme: %s",homeThemeName(homeTheme()));text(6,70,row,1,theme::Primary);
+            text(6,84,twelveHourClock()?"T Clock: 12-hour (toggle/save)":"T Clock: 24-hour (toggle/save)",1,theme::Primary);
+            text(6,104,message,1,!strcmp(message,"Settings save failed")?theme::Error:theme::Success);text(6,126,"Esc back");return;}
+        if(page==HomeThemePage){
+            frame("HOME THEME");
+            for(unsigned i=0;i<HomeThemeCount;++i){
+                const HomeTheme t=HomeTheme(i);const bool on=i==themeSelected,current=t==homeTheme();const int y=32+int(i)*24;
+                if(on)screen().drawRoundRect(2,y-3,236,22,3,theme::Primary);
+                snprintf(row,sizeof(row),"%u %s%s",i+1,homeThemeName(t),current?"  (current)":"");
+                text(8,y,row,1,on?theme::Primary:theme::Content);text(20,y+10,homeThemeAbout(t),1,0x8410);
+            }
+            text(6,108,message,1,!strcmp(message,"Home theme saved")?theme::Success:theme::Error);
+            text(6,126,"Up/Down  Enter apply  Esc back",1,theme::Primary);return;
+        }
         if(page==Shortcuts){
             // Reference only: arrows, Enter, Esc and G0 (Home) cover normal use.
             frame("SHORTCUT LIST");
             text(6,30,"Fn+1 Cache      Fn+2 Weather",1,theme::Primary);
             text(6,43,"Fn+3 Crypto     Fn+4 Terminal",1,theme::Primary);
-            text(6,56,"Fn+5 Settings   Fn+S SSH",1,theme::Primary);
-            text(6,72,"Fn+L   Idle screen");
-            text(6,85,"Fn+Esc Pocket sleep (G0 wakes)");
-            text(6,101,"Menus: arrows, Enter select, G0 Home",1,theme::RouteSettings);
+            text(6,56,"Fn+5 Settings   Fn+6 Calendar",1,theme::Primary);
+            text(6,69,"Fn+S SSH",1,theme::Primary);
+            text(6,83,"Fn+L   Idle screen");
+            text(6,95,"Fn+Esc Pocket sleep (G0 wakes)");
+            text(6,109,"Menus: arrows, Enter select, G0 Home",1,theme::RouteSettings);
             text(6,126,"Esc back");return;
         }
         if(page==About){frame("ABOUT");snprintf(row,sizeof(row),"%s %s",ProductName,SparkVersion);text(6,34,row,1,theme::Primary);text(6,51,"M5Stack Cardputer ADV / ESP32-S3");text(6,68,"Build " __DATE__);text(6,85,"SD local console; SSH reserved");text(6,102,"Productivity / everyday companion");text(6,126,"Esc back");return;}

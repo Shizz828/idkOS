@@ -38,6 +38,8 @@
 #include "core/StartupSequence.h"
 #include "ui/StartupScreen.h"
 #include "apps/LocationSettings.h"
+#include "apps/CalendarApp.h"
+#include "ui/HomeThemes.h"
 using namespace spark;
 namespace {
 Navigation nav;
@@ -83,6 +85,7 @@ SshApp sshApp;
 SshService sshService;
 uint32_t lastSshPoll=0;
 SettingsApp settings;
+CalendarApp calendarApp;
 SystemSnapshot systemState;
 uint32_t lastSystemPoll=0,lastStatsRequest=0;
 bool reminderWasVisible=false;
@@ -101,57 +104,20 @@ void wakeScreen(uint32_t now,const char* source) {
     Serial.printf("[screen] wake source=%s display=%d\n",source,ok);
     dirty=true;
 }
-void drawHome(time_t now) {
-    frame(ProductName);
-    char glance[40];
-    if(now>=ClockMinimum) {
-        struct tm local{},utc{}; localtime_r(&now,&local); gmtime_r(&now,&utc);
-        formatClock(glance,sizeof(glance),local.tm_hour,local.tm_min); text(6,31,glance,2);
-        char utcClock[9];formatClock(utcClock,sizeof(utcClock),utc.tm_hour,utc.tm_min);
-        snprintf(glance,sizeof(glance),"UTC %s",utcClock); text(150,34,glance);
-        strftime(glance,sizeof(glance),"%a %b %d %Y",&local); text(6,52,glance);
-    } else { text(6,31,"--:--",2); text(150,34,"UTC --:--"); text(6,52,"Date: not set"); }
-    if(weatherCache.weather.valid) {
-        snprintf(glance,sizeof(glance),"%dF %s%s",int(lroundf(weatherCache.weather.temperature)),
-            condition(weatherCache.weather.code),(!weatherCache.online || weatherCache.weatherFailed || stale(weatherCache.weather.updatedAt,now))?" [cached]":"");
-        glance[37]=0; text(6,66,glance);
-    } else text(6,66,"Weather: unavailable");
-    if(weatherCache.weather.valid) {
-        char location[18]{};
-        memcpy(location,weatherCache.location.label,strnlen(weatherCache.location.label,sizeof(location)-1));
-        text(132,52,location,1,theme::Primary);
-    }
-    const uint16_t routeColors[]={theme::RouteCapture,theme::RouteWeather,theme::RouteCrypto,
-        theme::RouteTerminal,theme::RouteSettings};
-    const char routeLetters[]={'C','W','C','T','S'};
-    // Five icons, 46 px apart and centered on the 240 px screen (centers 28..212),
-    // so the highlight ring keeps 14 px from both edges and clears the weather line.
-    constexpr int IconGap=46,IconRowY=94;
-    for(unsigned i=0;i<5;++i) {
-        const int x=120+IconGap*(int(i)-2);
-        auto& d=screen();
-        d.fillCircle(x,IconRowY,10,routeColors[i]);
-        char badge[2]={routeLetters[i],0};
-        d.setTextSize(2);
-        d.setTextColor(i<2?theme::Content:theme::Background,routeColors[i]);
-        d.setCursor(x-6,IconRowY-8);
-        d.print(badge);
-        if(i==nav.selected){d.drawCircle(x,IconRowY,13,theme::Primary);d.drawCircle(x,IconRowY,14,theme::Primary);}
-    }
-    // Left/Right highlight an app and G0 or Enter opens it; Fn shortcuts are in Settings.
-    if(nav.selected<HomeAppCount) {
-        const char* label=Apps[nav.selected].label;
-        text(120-int(strlen(label))*3,116,label,1,routeColors[nav.selected]);
-    }
-}
+// Home is drawn by the selected theme (Settings > Display > Home Theme); all three
+// share this launcher, its order and its keys.
+void drawHome(time_t now) { drawHomeTheme(homeTheme(),now,weatherCache,nav.selected); }
 // Opens an app from the Home launcher or a Fn shortcut; false when the terminal cannot start.
 bool openApp(unsigned target) {
     if(target==ConsoleIndex && !terminal.setDeveloper(false))return false;
-    nav.selected=target;nav.open();if(target==CaptureIndex)capture.open(noteStorage);dirty=true;
+    nav.selected=target;nav.open();if(target==CaptureIndex)capture.open(noteStorage);
+    if(target==CalendarIndex){const int64_t clock=time(nullptr);calendarApp.open(clock,systemTimeReady(clock));}
+    dirty=true;
     return true;
 }
 void drawApp(int64_t now) {
     if(nav.active==SshIndex) {sshApp.draw();return;}
+    if(nav.active==CalendarIndex) {calendarApp.draw();return;}
     if(nav.active==ConsoleIndex) {terminal.draw();return;}
     if(nav.active==SettingsIndex && !diagnostics && !locationSettings.active) {
         if(wifiSetup.editing) wifiSetup.draw(weatherCache,"ADD WI-FI");
@@ -195,6 +161,8 @@ void setup() {
     M5Cardputer.Display.setTextWrap(false);
     Preferences displayPrefs;
     if(displayPrefs.begin("spark-display",true)){settings.brightness=displayPrefs.getUChar("brightness",100);loadClockFormat(displayPrefs);displayPrefs.end();}
+    Preferences homePrefs;
+    if(homePrefs.begin(HomeThemeNamespace,true)){loadHomeTheme(homePrefs);homePrefs.end();}
     if(settings.brightness<20)settings.brightness=20;
     M5Cardputer.Display.setBrightness(settings.brightness);
     // Reinitialize the existing panel on every boot, including software resets
@@ -389,6 +357,8 @@ void loop() {
     if(nav.active==SshIndex && e.back) {
         if(!sshApp.back(sshService))nav.home();
         dirty=true;
+    } else if(nav.active==CalendarIndex && e.back && calendarApp.back()) {
+        dirty=true; // Esc closes the day view first, then goes Home below.
     } else if(nav.active==CaptureIndex && (e.home || e.back)) {
         if(capture.leave(e.home,noteStorage)) nav.home();
         dirty=true;
@@ -411,7 +381,13 @@ void loop() {
         if(target>=0 && !openApp(unsigned(target)))return;
     } else if (nav.active<0) {
         if(e.left || e.right){nav.moveHome(e.right?1:-1);dirty=true;}
-        if(e.enter && !openApp(nav.selected<HomeAppCount?nav.selected:CaptureIndex))return;
+        // homePosition, not "selected<HomeAppCount": Calendar's index is past the Home count.
+        if(e.enter && !openApp(homePosition(nav.selected)>=0?nav.selected:CaptureIndex))return;
+    } else if(nav.active==CalendarIndex) {
+        CalendarKeys keys;keys.up=e.up;keys.down=e.down;keys.left=e.left;keys.right=e.right;keys.enter=e.enter;
+        keys.prevMonth=strchr(e.text,'[')!=nullptr;keys.nextMonth=strchr(e.text,']')!=nullptr;
+        keys.today=strchr(e.text,'t')!=nullptr || strchr(e.text,'T')!=nullptr;
+        if(calendarApp.input(keys))dirty=true;
     } else if(nav.active==CaptureIndex) {
         capture.input(e,noteStorage);
         if(e.changed || e.erase || e.save || e.up || e.down || e.left || e.right || e.text[0] || e.enter) dirty=true;
@@ -459,6 +435,8 @@ void loop() {
             if(!screenOff && settings.page==SettingsApp::Display)applyBacklight(now);
             if(action==SettingsAction::SaveBrightness){Preferences prefs;bool ok=false;if(prefs.begin("spark-display",false)){ok=prefs.putUChar("brightness",settings.brightness)==1;prefs.end();}settings.savedBrightness(ok);}
             if(action==SettingsAction::SaveClockFormat){Preferences prefs;bool ok=false;if(prefs.begin("spark-display",false)){ok=saveClockFormat(prefs,!twelveHourClock());prefs.end();}settings.savedClockFormat(ok);}
+            if(action==SettingsAction::SaveHomeTheme){Preferences prefs;bool ok=false;const HomeTheme chosen=homeThemeFromStored(uint8_t(settings.themeSelected));
+                if(prefs.begin(HomeThemeNamespace,false)){ok=saveHomeTheme(prefs,chosen);prefs.end();}else homeTheme()=chosen;settings.savedHomeTheme(ok);}
             if(action==SettingsAction::Restart){if(noteStorage.idle()){Serial.println("[system] user-confirmed software restart");Serial.flush();ESP.restart();}else settings.storageBusy();}
         }
         if(e.changed||e.text[0]||e.enter||e.erase||e.up||e.down||e.left||e.right)dirty=true;
@@ -467,7 +445,11 @@ void loop() {
     if (nav.active<0 && uint32_t(now-lastStatus)>=60000) { lastStatus=now; dirty=true; }
     if(nav.active==WeatherIndex && uint32_t(now-lastWeatherDraw)>=60000) { lastWeatherDraw=now; dirty=true; }
     if(nav.active==CryptoIndex && uint32_t(now-lastWeatherDraw)>=60000) { lastWeatherDraw=now; dirty=true; }
+    // Calendar: redraw each minute so "today" moves on at midnight and new reminders show.
+    if(nav.active==CalendarIndex && uint32_t(now-lastWeatherDraw)>=60000) { lastWeatherDraw=now; dirty=true; }
     bool fullDraw=dirty && !screenOff;
+    // Calendar reads Cache's reminder schedule once per frame (the screen draws in strips).
+    if(fullDraw && nav.active==CalendarIndex)calendarApp.prepare(reminders.engine.record.items,MaxNotes,clock,systemTimeReady(clock));
     uiHealth().mark(UiPhase::Display,millis());
     if (fullDraw) {
         renderScreen([&]{bool visible=reminders.engine.visible(clock,systemTimeReady(clock));

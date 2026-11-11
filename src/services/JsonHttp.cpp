@@ -32,7 +32,7 @@ HttpResult fetchJson(const char* url, DynamicJsonDocument& doc, JsonVariantConst
     http.setConnectTimeout(8000); http.setTimeout(8000);
     http.setReuse(false); http.useHTTP10(true);
     if(!http.begin(client,url)) { snprintf(error,errorSize,"HTTPS setup failed"); result.failure=HttpFailure::Connection; return result; }
-    http.addHeader("User-Agent","idkOS/1.1.2 (Cardputer client)");
+    http.addHeader("User-Agent","idkOS/1.3.0 (Cardputer client)");
     http.addHeader("Accept","application/json");
     if(authHeader && authKey) http.addHeader(authHeader,authKey);
     const char* headers[]={"Retry-After"}; http.collectHeaders(headers,1);

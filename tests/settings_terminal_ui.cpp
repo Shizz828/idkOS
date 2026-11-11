@@ -22,8 +22,8 @@ int main(){
     auto shows=[](const char* value){for(const auto& row:M5Cardputer.Display.printed)if(row.text==value)return true;return false;};
     auto spark=[]{for(const auto& row:M5Cardputer.Display.printed)if(row.text.find("Spark")!=std::string::npos || row.text.find("SPARK")!=std::string::npos)return true;return false;};
     assert(!strcmp(spark::ProductName,"idkOS"));
-    settings.page=spark::SettingsApp::About;settings.draw(weather,state);assert(shows("idkOS 1.1.2") && !spark());
-    settings.page=spark::SettingsApp::Maintenance;settings.draw(weather,state);assert(shows("idkOS 1.1.2") && !spark());
+    settings.page=spark::SettingsApp::About;settings.draw(weather,state);assert(shows("idkOS 1.3.0") && !spark());
+    settings.page=spark::SettingsApp::Maintenance;settings.draw(weather,state);assert(shows("idkOS 1.3.0") && !spark());
     settings.page=spark::SettingsApp::Main;settings.draw(weather,state);assert(shows("4 Shortcut List") && shows("5 About idkOS") && !spark());
     // Settings > 4 Shortcut List and 5 About idkOS (always last): by number, or by arrows and Enter; Esc returns.
     settings.page=spark::SettingsApp::Main;strcpy(e.text,"5");settings.input(e,weather,network);
