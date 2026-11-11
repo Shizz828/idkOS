@@ -1,7 +1,7 @@
 
 ![idkOS v1.3.0 — Home Themes and Calendar](idkos_v1.3.0_cardputer_release_poster.png)
 
-![idkOS 1.3.0 - Home Themes and Calendar](idkos_1.3.0_themes_calendar_update.png)
+
 ## Latest Update — idkOS v1.3.0 🚇
 
 ### Home Themes & Calendar Update
